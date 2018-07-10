@@ -49,23 +49,20 @@ Compared to prviously discussed encoder block as well as the 1X1 convolution lay
 Firstly, the upsampling part takes the input, and increases its width and height by a factor of two. This is done through what is called a *transposed convolution*; Secondly, The skip connection part concatenates the upsampled data with the corresponding encoder output with the same dimensions. This would allow us to retain information that the image has lost after going through multiple reductions of height and width; Last not least, two succeeding separable convolution layers with a stride of one and desired number of output or filters have been implemented  before returning the output.  
 
 
-Below is an image for the separable convolution used within the decoder blocks. Note that the output width and heights remain the same as the inputs, as opposed to the encoder blocks where these are halved.
-![separable-convolution-for-decoder](./images/sep_conv_for_decoder.png)
+## tuning Hyperparameters
 
-Below is an illustration of the decoder block's architecture. It is more complex than that of an encoder block which is simply composed of one separable convolution with a stride of 2. The decoder block on the other hand involves an upsampling step, a skip connection, as well as three succeeding separable convolutions.
+Training the model requires specifying several hyperparameters.  This section of the writeup will attempt to discuss these parameters, indicate the values used, and clarify why such values were chosen
 
-![decoder-architecture](./images/decoder_arch.png)
+- **learning_rate**: The learning rate is a value that sets how quickly (or slowly) a neural network makes adjustments to what it has learned while it is being trained. The ideal learning rate would allow a neural network to reach the gradient descent and error minimization minimums at the least amount of time, without causing overfitting. In order to get a better learning rate, different valuse have been tested to see which one would be the most effective. In my case, 0.1, 0.5, 0.01, 0.008 and 0.0005 have been tried. Eventually, 0.008 is determined.
 
-### A note regarding fully connected layers, convolutional layers, and 1 x 1 convolutions
+- **batch_size**: number of training samples/images that get propagated through the network in a single pass.  A good batch size would be one that is large enough such that it can still be handled by available computing resources, but at the same time not too large to cause overfitting. It should also be small enough but not too small. If the batches are too small, the neural network may have difficulty forming its generalizations. In my case, I used 64 as batch_size for training.
 
-Neural Networks used for image classification normally have one or two fully connected layers found at the end the network prior to returning the result. These last two fully connected layers are ultimately used to classify the content of the image input.  Each node in each "fully connected layer" is "fully" connected to each node of the previous layer.  The intuition is that these fully connected layers need to make sense of all the nodes in the previous layer, and how each node relates to each other.
+- **num_epochs**: number of times the entire training dataset gets propagated through the network. The ideal number of epochs would be the lowest possible value that would still be able to fully minimize the error rates of the neural network being trained, and avoid overfitting at the same time. I started off at a low value of 4, the number was increased by 4 each step, and it reached to 16. By applying all of these tested values, the train model was still capable of pushing loss and error rates downward. Finally, 12 was used as num_epochs.
 
-This is in contrast with convolutional layers (also called dense layers). In convolutional layers, each *output* node is not connected to each *input* node.  Instead, each ouput node is only connected to a *subset* of input nodes.  Normally, this subset of input nodes are nodes that are grouped together, or found besides each other. The widths and heights of the grouping of these nodes are normally determined by the width and height of the filter being used for the convolutions.
+- **steps_per_epoch**: number of batches of training images that go through the network in 1 epoch. We have provided you with a default value. One recommended value to try would be based on the total number of images in training dataset divided by the batch_size.
+- **validation_steps**: number of batches of validation images that go through the network in 1 epoch. This is similar to steps_per_epoch, except validation_steps is for the validation dataset. We have provided you with a default value for this as well.
+- **workers**: maximum number of processes to spin up. This can affect your training speed and is dependent on your hardware. We have provided a recommended value to work with. 
 
-In our particular network architecture, the middle 1x1 layer is convolutional, however, it still performs the image identification portion which is normally performed by a fully connected network.  The encoding layers funnel the image until it reaches the 1x1 layer which in turn classifies the objects found in the image.  Once the objects have been classified, the decoding layers after this 1x1 layer are later on used to ensure that spatial information is preserved, and that the final output shows where each object is located in the image.
-
-
-## Setting the Network Parameters
 Training the model requires specifying several hyperparameters.  This section of the writeup will attempt to discuss these parameters, indicate the values used, and clarify why such values were chosen.
 
 1. learning_rate
