@@ -34,10 +34,10 @@ Once done with the encoder blocks, output is then passed as input onto a convolu
 stride = 1, and
 zero (same) padding.
 
-‘’‘
+```
     # TODO Add 1x1 Convolution layer using conv2d_batchnorm().
     conv_1x1 = conv2d_batchnorm(input_layer=enc_bloc2, filters=128, kernel_size=1, strides=1)
-’‘’
+```
 
 The kernel size for this layer is one (1) as the name implies, and also with a stride of one (1). A fully connected layer normally serves as the output layer for Fully Convoluted Networks whose aim is to simply identify or classify objects found in images. In our case, this image identification is performed by this 1 x 1 convolutional layer instead, not by a fully connected layer. However, since our objective is also to locate which part of the image these objects are in, we need to have additional steps and layers after this.
 
