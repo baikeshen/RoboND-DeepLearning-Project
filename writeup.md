@@ -9,12 +9,13 @@ In particular, the deep learning technique called Fully Convolutional Network (F
 This writeup was prepared for the benefit of the Udacity Robotics Nanodegree Deep Learning Project. The intent is to document and clarify the decisions and the reasons behind these that were made in the project. 
 
 ## Network Architecture
-In this project, we are using a Fully Convolutional Neural Network to help us in image segmentation and object identification. That is, the neural network will help us identify a target object in an image, and at the same time tell us what specific part of the image the object is at. To be specific, we will be using images taken by a simulated drone, identify and detect the presence of a particular human that the drone has been tagged to follow (referred to as the hero), identify which part of the image the hero is in, and also differentiate the hero/target from any other people that may be found in the image, as well as any other background features.
-
-For this challenge, we will be using a Fully Convolutional Neural Network that has 5 layers.  Two (2) encoding layers, one 1 x 1 convolutional layer, and two (2) decoding layers, with the last decoding layer serving as the output layer which returns the result.
+In this project, we are using a Fully Convolutional Neural Network to help us in image segmentation and object identification. The network architecture is composed of following layers
+- 3 encoder layers
+- 1x1 conv layer
+- 3 decoder layers
 
 Below is an illustration of the final network architecture.
-![network-architecture-overview](./images/architecture_overview.png)
+![network-architecture-overview](./misc/fcb.png)
 
 As can be seen in the image, the network is composed of five(5) layers.  Two(2) encoders, one(1) convolutional 1x1 layer, and two(2) decoders. Although a convolutional 1x1 layer is mentioned only once in the overview of the network architecture, 1x1 convolutions are actually used in every layer of the network in the form of separable 2d convolutions. These 1x1 convolutions assist us in dimensional reduction, resulting in sped up and less memory intensive computations. 1x1 convolutions also return outputs with any depth or number of filters that we want or specify.
 
