@@ -23,8 +23,6 @@ Each encoding layer performs a *depthwise separable convolution*. This requires 
 
 In our case, a kernel size of three (3) has been applied. Sride for each encoding layer is two (2), which basically halves the succeeding output's width and height for each encoding layer present. Results are also batch normalized before being returned as output.
 
-Below is an illustration of the separable convolution used for our encoding blocks
-![separable-convolution-for-encoder](./images/sep_conv_for_encoder.png)
 
 ##### FCN: 1X1 Convoluational layer
 
@@ -39,7 +37,14 @@ zero (same) padding.
     conv_1x1 = conv2d_batchnorm(input_layer=enc_bloc2, filters=128, kernel_size=1, strides=1)
 ```
 
-The kernel size for this layer is one (1) as the name implies, and also with a stride of one (1). A fully connected layer normally serves as the output layer for Fully Convoluted Networks whose aim is to simply identify or classify objects found in images. In our case, this image identification is performed by this 1 x 1 convolutional layer instead, not by a fully connected layer. However, since our objective is also to locate which part of the image these objects are in, we need to have additional steps and layers after this.
+
+##### FCN:Decoder
+
+Compared to prviously discussed encoder block as well as the 1X1 convolution layer, the decoder bloack is fairly complex. The decoder block is composed of the following three subparts:
+
+upsampling
+skip connection
+two succeeding separable convolutions
 
 These steps and layers are referred to as our decoder blocks. Our decoder blocks are fairly more complex than the previously discussed encoder block as well as the 1 x 1 convolutional layer.  It has 3 main subparts, namely: the input upsampling part, skip connection part, and the additional convolutions part. The upsampling part takes the input, and increases its width and height by a factor of two. This is done through what is called a *transposed convolution*. The skip connection part concatenates the upsampled data with the corresponding encoder output with the same dimensions. This would allow us to retain information that the image has lost after going through multiple reductions of height and width. Another way of thinking of this is that skip connections allows us to "fill in the blanks" of the upsampled data. And lastly, we pass the data onto three(3) succeeding separable convolution layers with a stride of one(1) before returning the output.  The stride of 1 guarantees that there is no change in the width or height of the data. We also obtain an output with the desired number of output depth or filters by passing the intended value using the "filters" parameter.
 
