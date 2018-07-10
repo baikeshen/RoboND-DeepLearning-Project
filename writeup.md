@@ -1,6 +1,6 @@
 # Deep Learning Project Writeup
 
-##Project Introduction
+## Project Introduction
 
 In this project, the goal is to train a deep neural network to identify and track a target in simulation. The technique used for "follow me” applications could be extended to scenarios like advanced cruise control in autonomous vehicles or human-robot collaboration in industry.
 
