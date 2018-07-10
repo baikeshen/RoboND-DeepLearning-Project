@@ -10,27 +10,36 @@ This writeup was prepared for the benefit of the Udacity Robotics Nanodegree Dee
 
 ## Network Architecture
 In this project, we are using a Fully Convolutional Neural Network to help us in image segmentation and object identification. The network architecture is composed of following layers
-- 3 encoder layers
+- 2 encoder layers
 - 1x1 conv layer
-- 3 decoder layers
+- 2 decoder layers
 
 Below is an illustration of the final network architecture.
 ![network-architecture-overview](misc/fcb.png)
 
-As can be seen in the image, the network is composed of five(5) layers.  Two(2) encoders, one(1) convolutional 1x1 layer, and two(2) decoders. Although a convolutional 1x1 layer is mentioned only once in the overview of the network architecture, 1x1 convolutions are actually used in every layer of the network in the form of separable 2d convolutions. These 1x1 convolutions assist us in dimensional reduction, resulting in sped up and less memory intensive computations. 1x1 convolutions also return outputs with any depth or number of filters that we want or specify.
+##### FCN:encoding layer
 
-Each encoding layer performs a *depthwise separable convolution*. This requires less compute resources as opposed to using normal convolutions. It is able to accomplish this by significantly reducing the total number of parameters necessary for the computations. Paul-Louis Pr?ve in his blog post entitled "[An Introduction to different Types of Convolutions in Deep Learning][1]" provides a couple of examples illustrating this difference:
+Each encoding layer performs a *depthwise separable convolution*. This requires less compute resources as opposed to using normal convolutions. It is able to accomplish this by significantly reducing the total number of parameters necessary for the computations. Please refered to Paul-Louis Pr?ve in his blog post entitled "[An Introduction to different Types of Convolutions in Deep Learning][1]" which provides a couple of examples illustrating this difference.
 
-> Let¡¯s say we have a 3x3 convolutional layer on 16 input channels and 32 output channels. What happens in detail is that every of the 16 channels is traversed by 32 3x3 kernels resulting in 512 (16x32) feature maps. Next, we merge 1 feature map out of every input channel by adding them up. Since we can do that 32 times, we get the 32 output channels we wanted.
-
-> For a depthwise separable convolution on the same example, we traverse the 16 channels with 1 3x3 kernel each, giving us 16 feature maps. Now, before merging anything, we traverse these 16 feature maps with 32 1x1 convolutions each and only then start to them add together. *This results in 656 (16x3x3 + 16x32x1x1) parameters opposed to the 4608 (16x32x3x3) parameters* from above. (emphasis mine)
-
-In our case, we also use a kernel size of three (3) but with input and output channels that were identified in the above image of the network architecture. Stride for each encoding layer is two (2), which basically halves the succeeding output's width and height for each encoding layer present. Results are also batch normalized before being returned as output.
+In our case, a kernel size of three (3) has been applied. Sride for each encoding layer is two (2), which basically halves the succeeding output's width and height for each encoding layer present. Results are also batch normalized before being returned as output.
 
 Below is an illustration of the separable convolution used for our encoding blocks
 ![separable-convolution-for-encoder](./images/sep_conv_for_encoder.png)
 
-Once done with the encoder blocks, output is then passed as input onto a convolutional 1x1 layer. The kernel size for this layer is one (1) as the name implies, and also with a stride of one (1). A fully connected layer normally serves as the output layer for Fully Convoluted Networks whose aim is to simply identify or classify objects found in images. In our case, this image identification is performed by this 1 x 1 convolutional layer instead, not by a fully connected layer. However, since our objective is also to locate which part of the image these objects are in, we need to have additional steps and layers after this.
+##### FCN: 1X1 Convoluational layer
+
+Once done with the encoder blocks, output is then passed as input onto a convolutional 1x1 layer. A 1x1 convolution is essentially convolving with a set of filters of dimensions:
+
+1x1xfilter_size (HxWxD)： 128
+stride = 1, and
+zero (same) padding.
+
+‘’‘
+    # TODO Add 1x1 Convolution layer using conv2d_batchnorm().
+    conv_1x1 = conv2d_batchnorm(input_layer=enc_bloc2, filters=128, kernel_size=1, strides=1)
+’‘’
+
+The kernel size for this layer is one (1) as the name implies, and also with a stride of one (1). A fully connected layer normally serves as the output layer for Fully Convoluted Networks whose aim is to simply identify or classify objects found in images. In our case, this image identification is performed by this 1 x 1 convolutional layer instead, not by a fully connected layer. However, since our objective is also to locate which part of the image these objects are in, we need to have additional steps and layers after this.
 
 These steps and layers are referred to as our decoder blocks. Our decoder blocks are fairly more complex than the previously discussed encoder block as well as the 1 x 1 convolutional layer.  It has 3 main subparts, namely: the input upsampling part, skip connection part, and the additional convolutions part. The upsampling part takes the input, and increases its width and height by a factor of two. This is done through what is called a *transposed convolution*. The skip connection part concatenates the upsampled data with the corresponding encoder output with the same dimensions. This would allow us to retain information that the image has lost after going through multiple reductions of height and width. Another way of thinking of this is that skip connections allows us to "fill in the blanks" of the upsampled data. And lastly, we pass the data onto three(3) succeeding separable convolution layers with a stride of one(1) before returning the output.  The stride of 1 guarantees that there is no change in the width or height of the data. We also obtain an output with the desired number of output depth or filters by passing the intended value using the "filters" parameter.
 
