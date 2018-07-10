@@ -46,7 +46,8 @@ Compared to prviously discussed encoder block as well as the 1X1 convolution lay
  - skip connection
  - two succeeding separable convolutions
 
-Firstly, the upsampling part takes the input, and increases its width and height by a factor of two. This is done through what is called a *transposed convolution*; Secondly, The skip connection part concatenates the upsampled data with the corresponding encoder output with the same dimensions. This would allow us to retain information that the image has lost after going through multiple reductions of height and width; Last not least, two succeeding separable convolution layers with a stride of one have been implemented  before returning the output.  The stride of 1 guarantees that there is no change in the width or height of the data. We also obtain an output with the desired number of output depth or filters by passing the intended value using the "filters" parameter.
+Firstly, the upsampling part takes the input, and increases its width and height by a factor of two. This is done through what is called a *transposed convolution*; Secondly, The skip connection part concatenates the upsampled data with the corresponding encoder output with the same dimensions. This would allow us to retain information that the image has lost after going through multiple reductions of height and width; Last not least, two succeeding separable convolution layers with a stride of one and desired number of output or filters have been implemented  before returning the output.  
+
 
 Below is an image for the separable convolution used within the decoder blocks. Note that the output width and heights remain the same as the inputs, as opposed to the encoder blocks where these are halved.
 ![separable-convolution-for-decoder](./images/sep_conv_for_decoder.png)
