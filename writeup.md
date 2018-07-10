@@ -36,7 +36,7 @@ zero (same) padding.
     # TODO Add 1x1 Convolution layer using conv2d_batchnorm().
     conv_1x1 = conv2d_batchnorm(input_layer=enc_bloc2, filters=128, kernel_size=1, strides=1)
 ```
-
+in TensorFlow, the output shape of a convolutional layer is a 4D tensor. However, when we wish to feed the output of a convolutional layer into a fully connected layer, we flatten it into a 2D tensor. This results in the loss of spatial information, because no information about the location of the pixels is preserved. This could be avoided by using 1X1 Fully Convolution layer.
 
 ##### FCN:Decoder
 
