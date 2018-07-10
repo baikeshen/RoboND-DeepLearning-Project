@@ -66,7 +66,22 @@ Training the model requires specifying several hyperparameters.  This section of
 - **workers**: maximum number of processes to spin up. This can affect the training speed and is dependent on your hardware. We have provided a recommended value to work with. 
 
 ## Results and Discussion
+
 Multiple runs were initially performed using different numbers of layers and layer depths at lesser steps per epoch (40 steps per epoch instead of 200 steps), starting from 3 layer networks (1 encoder, 1x1 fully connected layer, 1 decoder) to 9 layer networks (4 encoders, 1x1 fully connected layer, 4 decoders).  The initial values for the depths were doubled for each encoder up to the 1x1 convolution layer, then halved for each decoder until the output.  For example, a 5 layer network was run with layer depths of (8, 16, 32, 16, output depth) up to layer depths of (32, 64, 128, 64, output depth). Initial runs showed that 9 layered networks produced the least number of results that returned 0 for the weights, IoU, and final score, and that the returned scores are generally higher than those found in networks with less layers. As such, we focused on training 9 layer networks with layer depths of (32, 64, 128, 256, 512, 256. 128, 64, output depth), at the normal number of steps (200 steps x 40 images per batch or step) per epoch. After performing 28 runs (of 20 epochs each) using the aforementioned parameters, 0.4490 was the highest final score obtained. Furthermore, typical final scores were underwhelming, and are mostly in the 0.20 - 0.30 range, and final scores of 0.0 were fairly common. Getting final scores that were above 0.35 was fairly rare.
+
+Below table shows the accuracy score and training time on a local Ubuntu computer:
+
+ecoders/decoders | filter_size | batch_size | num_epochs | workers | training_time | accuracy_score (%)
+------------ | ------------ | ------------- | ------------- | ------------- | ------------- | -------------
+3/3 | 32 | 50 | 30 | 3 | 08 hrs. (15 min/epoch) | 36.23
+3/3 | 32 | 50 | 40 | 3 | 10 hrs. (15 min/epoch) | 39.78
+3/3 | 64 | 48 | 48 | 8 | 28 hrs. (35 min/epoch) | 43.21
+4/4 | 32 | 48 | 40 | 8 | 20 hrs. (30 min/epoch) | 38.58
+
+The training time heavily depends on the filter size. By doubling the filter size from 32 to 64 resulted in three times the training time.  Also, keeping the same filter size (32) but making deeper convolution layers, caused the training time to be longer.  However, the deeper model (4 encoders and 4 decoders) with smaller filter depth (32) seems to take lesser training time per epoch than the larger filter depth. Keeping all parameters the same but adding additional convolution layer caused the model training time to be doubles while it did not help improve the accuracy of prediction (compare row2 and row 4 in the above table). However it seems that increasing the filter depth from 32 to 64 and increasing the number of epochs helped improve the prediction accuracy. The final training loss for model trained with encoder size 32 (left, for second row from the table) and 64 (right, for third row from the table) are shown below.
+
+
+
 
 However, some experimentation in quadrupling depth sizes with each encoder instead of doubling them resulted in more consistent and generally better results. In our case, utilizing a 5 layer network, with depth sizes of (16, 64, 256, 64, output depth), at 20 epochs for each run, returned final scores that were consistently better than the previous results.  No final score returned for this configuration was beneath the value of 0.20. Furthermore, scores above 0.40 were fairly common, and constituted about half of the results. And after 19 runs, the highest score of 0.4756 was obtained.
 
