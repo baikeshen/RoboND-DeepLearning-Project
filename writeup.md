@@ -1,5 +1,11 @@
 # Deep Learning Project Writeup
 
+##Project Introduction
+
+In this project, the goal is to train a deep neural network to identify and track a target in simulation. The technique used for "follow meâ€ applications could be extended to scenarios like advanced cruise control in autonomous vehicles or human-robot collaboration in industry.
+
+In particular, the deep learning technique called Fully Convolutional Network (FCN)  is applied to the images captured by the cameras mounted onto the drone.  with the help of Fully Convolutional Deep Neural Networks, we can train models that will not only be able to identify the contents of an image, it will also be able to figure out what part of the image the object is located at. 
+
 This writeup was prepared for the benefit of the Udacity Robotics Nanodegree Deep Learning Project. The intent is to document and clarify the decisions and the reasons behind these that were made in the project. 
 
 ## Network Architecture
@@ -14,7 +20,7 @@ As can be seen in the image, the network is composed of five(5) layers.  Two(2) 
 
 Each encoding layer performs a *depthwise separable convolution*. This requires less compute resources as opposed to using normal convolutions. It is able to accomplish this by significantly reducing the total number of parameters necessary for the computations. Paul-Louis Pr?ve in his blog post entitled "[An Introduction to different Types of Convolutions in Deep Learning][1]" provides a couple of examples illustrating this difference:
 
-> Let¡¯s say we have a 3x3 convolutional layer on 16 input channels and 32 output channels. What happens in detail is that every of the 16 channels is traversed by 32 3x3 kernels resulting in 512 (16x32) feature maps. Next, we merge 1 feature map out of every input channel by adding them up. Since we can do that 32 times, we get the 32 output channels we wanted.
+> LetÂ¡Â¯s say we have a 3x3 convolutional layer on 16 input channels and 32 output channels. What happens in detail is that every of the 16 channels is traversed by 32 3x3 kernels resulting in 512 (16x32) feature maps. Next, we merge 1 feature map out of every input channel by adding them up. Since we can do that 32 times, we get the 32 output channels we wanted.
 
 > For a depthwise separable convolution on the same example, we traverse the 16 channels with 1 3x3 kernel each, giving us 16 feature maps. Now, before merging anything, we traverse these 16 feature maps with 32 1x1 convolutions each and only then start to them add together. *This results in 656 (16x3x3 + 16x32x1x1) parameters opposed to the 4608 (16x32x3x3) parameters* from above. (emphasis mine)
 
