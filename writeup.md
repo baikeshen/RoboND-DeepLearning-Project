@@ -15,7 +15,7 @@ In this project, we are using a Fully Convolutional Neural Network to help us in
 - 3 decoder layers
 
 Below is an illustration of the final network architecture.
-![network-architecture-overview](./misc/fcb.png)
+![network-architecture-overview](misc/fcb.png)
 
 As can be seen in the image, the network is composed of five(5) layers.  Two(2) encoders, one(1) convolutional 1x1 layer, and two(2) decoders. Although a convolutional 1x1 layer is mentioned only once in the overview of the network architecture, 1x1 convolutions are actually used in every layer of the network in the form of separable 2d convolutions. These 1x1 convolutions assist us in dimensional reduction, resulting in sped up and less memory intensive computations. 1x1 convolutions also return outputs with any depth or number of filters that we want or specify.
 
