@@ -59,13 +59,22 @@ These three models are discussed in more detail as follows.
 
 There are total of 5 layers consisted of this proposed model. The network architecture is shown in Figure X, and the detailed description of each layer is domonstrated in Table:
 
-ecoders/decoders | filter_size | batch_size | num_epochs | workers | training_time | accuracy_score (%)
-4/4 | 32 | 48 | 40 | 8 | 20 hrs. (30 min/epoch) | 38.58
-4/4 | 32 | 48 | 40 | 8 | 20 hrs. (30 min/epoch) | 38.58
-4/4 | 32 | 48 | 40 | 8 | 20 hrs. (30 min/epoch) | 38.58
-4/4 | 32 | 48 | 40 | 8 | 20 hrs. (30 min/epoch) | 38.58
-4/4 | 32 | 48 | 40 | 8 | 20 hrs. (30 min/epoch) | 38.58
 
+Name         Width        Height       Depth            Layer Detail
+
+Input         160          160          3                  Input Image
+
+ 1             80           80          32        encoder layer( Filters=32, Kernel=(3X3), Stride=2, Padding='same')     
+ 
+ 2             40           40          64        encoder layer( Filters=64, Kernel=(3X3), Stride=2, Padding='same')
+ 
+ 3             40           40         128     1 X 1 Convolution layer(Filters=128, Kernel=(1X1), Stride=1, Padding='same')
+ 
+ 4             80           80          32         decoder layer: Adding upsampled layer 3 to layer 1 with a skip connection,
+                                               and passed through a 2D convolution with 64 filters of 3X3 kernal, and same padding
+                                                                                            
+   1             80           80          32          Convol2D( Filters=32, Kernel=(3X3), Stride=2, Padding='same')
+    1             80           80          32          Convol2D( Filters=32, Kernel=(3X3), Stride=2, Padding='same')
 ## tuning Hyperparameters
 
 Training the model requires specifying several hyperparameters.  This section of the writeup will attempt to discuss these parameters, indicate the values used, and clarify why such values were chosen
