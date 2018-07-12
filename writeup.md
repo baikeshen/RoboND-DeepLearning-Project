@@ -47,7 +47,24 @@ Firstly, the upsampling part takes the input, and increases its width and height
 
 ## Proposed Architectures & Implementation
 
-As shown in the original FCN architecture by Shellhamer, Long, and Darrell (2014) below, FCN networks have many layers to performance segmentation on images. However, The proposed models here are tageted on semantic segmentation pf images taken from 3D environment
+As shown in the original FCN architecture by Shellhamer, Long, and Darrell (2014) below, FCN networks have many layers to performance segmentation on images. However, The proposed models here are targeted on semantic segmentation of images taken from 3D simulated environment. It is unnecceary to duplicate this kind of architecture in order to get some reasonable performance. So smaller models are proposed for investigations:
+
+- Shallow Model 1 with 1X1 convolutions
+- Shallow Model 2 with 1X1 convolutions
+- Deep Model with 1X1 convolutions
+
+These three models are discussed in more detail as follows.
+
+#### Shallow Model 1 with 1X1 convolutions
+
+There are total of 5 layers consisted of this proposed model. The network architecture is shown in Figure X, and the detailed description of each layer is domonstrated in Table:
+
+ecoders/decoders | filter_size | batch_size | num_epochs | workers | training_time | accuracy_score (%)
+4/4 | 32 | 48 | 40 | 8 | 20 hrs. (30 min/epoch) | 38.58
+4/4 | 32 | 48 | 40 | 8 | 20 hrs. (30 min/epoch) | 38.58
+4/4 | 32 | 48 | 40 | 8 | 20 hrs. (30 min/epoch) | 38.58
+4/4 | 32 | 48 | 40 | 8 | 20 hrs. (30 min/epoch) | 38.58
+4/4 | 32 | 48 | 40 | 8 | 20 hrs. (30 min/epoch) | 38.58
 
 ## tuning Hyperparameters
 
