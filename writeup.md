@@ -41,7 +41,7 @@ Compared to prviously discussed encoder block as well as the 1X1 convolution lay
 
  - upsampling
  - skip connection
- - two succeeding separable convolutions
+ - succeeding separable convolutions
 
 Firstly, the upsampling part takes the input, and increases its width and height by a factor of two. This is done through what is called a *transposed convolution*; Secondly, The skip connection part concatenates the upsampled data with the corresponding encoder output with the same dimensions. This would allow us to retain information that the image has lost after going through multiple reductions of height and width; Last not least, two succeeding separable convolution layers with a stride of one and desired number of output or filters have been implemented  before returning the output.  
 
@@ -64,12 +64,22 @@ There are total of 5 layers consisted of this proposed model. The network archit
 
 ![alt text][image3]
 
-This model 
+This model Loss values over time is shown as below, which demonstrate rapid learning. The evaluated intersection over union for this model was 0.427260086539.
+
+![alt text][image5]
+
 
 #### Deep Model with 1X convolution
-    
+
+This is a aliitle bit deeper model compared to shallow one above. 
 
 ![alt text][image4]
+
+Below is the loss value over time during training period:
+
+![alt text][image6]
+
+ The evaluated intersection over union for this model was 0.430452304758.
 
 ## tuning Hyperparameters
 
