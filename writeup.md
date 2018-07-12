@@ -60,18 +60,18 @@ However, The proposed models here are targeted on semantic segmentation of image
 - Deep Model with 1X1 convolutions
 
 
-#### Shallow Model with 1X1 convolutions
+#### Shallow Model 
 
 There are total of 5 layers consisted of this proposed model. The network architecture is shown as below:
 
 ![alt text][image3]
 
-This model Loss values over time is shown as below, which demonstrate rapid learning. The evaluated intersection over union for this model was 0.427260086539.
+This model Loss values over time is shown as below, which demonstrate rapid learning. The evaluated intersection over union for this model was 0.427260086539. Model and weights file in the .h5 file format is modell_weights_BK
 
 ![alt text][image5]
 
 
-#### Deep Model with 1X convolution
+#### Deep Model 
 
 This is a aliitle bit deeper model compared to shallow one above. 
 
@@ -81,7 +81,7 @@ Below is the loss value over time during training period:
 
 ![alt text][image6]
 
- The evaluated intersection over union for this model was 0.430452304758.
+ The evaluated intersection over union for this model was 0.430452304758.Model and weights file in the .h5 file format is modell_weights_layers
 
 ## tuning Hyperparameters
 
