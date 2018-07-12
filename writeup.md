@@ -101,7 +101,15 @@ Training the model requires specifying several hyperparameters.  This section of
 
 ## Discussion & Improvement
 
-The training time heavily depends on number of layers and the filter size. By doubling the filter size from 32 to 64 resulted in 2~4 times the training time.  Also, keeping the same filter size (32) but making deeper convolution layers, caused the training time to be longer. Keeping all parameters the same but adding maxpooling2D layer to the encoder significantly increase the training time.
+#### some limitations:
+
+This trained model can not be used to identify other human models or another object (dog, cat, car, etc.) in different colored outfit. In order to indetify other type of objects, the model needs to be re-trained;
+
+The model accuracy is quite low even for a simulation environment. It is unacceptable to adopt it in the real-world scenario.
+
+#### Potential Improvement
+
+Adding maxpooling2D layer to the encoder.
 
 Training and validation data used for all runs were the default ones provided in the project, further improvements to the final score could be achieved by obtaining more training data.
 
