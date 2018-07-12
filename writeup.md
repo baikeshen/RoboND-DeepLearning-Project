@@ -3,6 +3,8 @@
 [image2]: ./misc/SegNet_Long_2014.jpg
 [image3]: ./misc/BK_FCN_01.jpg
 [image4]: ./misc/BK_FCN_04.jpg
+[image5]: ./misc/Model_BK_Loss.JPG
+[image6]: ./misc/Deep_Model_BK_Loss.JPG
 
 ## Project Introduction
 
