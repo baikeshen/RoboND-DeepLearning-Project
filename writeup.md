@@ -12,7 +12,7 @@ In this project, the goal is to train a deep neural network to identify and trac
 
 In particular, the deep learning technique called Fully Convolutional Network (FCN)  is applied to the images captured by the cameras mounted onto the drone.  with the help of Fully Convolutional Deep Neural Networks, we can train models that will not only be able to identify the contents of an image, it will also be able to figure out what part of the image the object is located at. 
 
-This writeup was prepared for the benefit of the Udacity Robotics Nanodegree Deep Learning Project. The intent is to document and clarify the decisions and the reasons behind these that were made in the project. 
+This writeup was prepared for the benefit of the Udacity Robotics Nanodegree Deep Learning Project.
 
 ## Network Architecture
 In this project, we are using a Fully Convolutional Neural Network to help us in image segmentation and object identification. The network architecture is composed of following layers
@@ -24,7 +24,7 @@ Below is an example of FCN architecture which shows an FCN network called SegNet
 
 ![alt text][image1]
 
-##### FCN:encoding layer
+##### FCN:encoder layer
 
 Each encoding layer performs a *depthwise separable convolution*. This requires less compute resources as opposed to using normal convolutions. It is able to accomplish this by significantly reducing the total number of parameters necessary for the computations. Please refered to Paul-Louis Pr?ve in his blog post entitled "[An Introduction to different Types of Convolutions in Deep Learning][1]" which provides a couple of examples illustrating this difference.
 
@@ -56,8 +56,8 @@ As shown in the original FCN architecture by Shellhamer, Long, and Darrell (2014
 
 However, The proposed models here are targeted on semantic segmentation of images taken from 3D simulated environment. It is unnecceary to duplicate this kind of architecture in order to get some reasonable performance. So smaller models are proposed for investigations:
 
-- Shallow Model 1 with 1X1 convolutions
-- Deep Model with 1X1 convolutions
+- Shallow Model 
+- Deep Model 
 
 
 #### Shallow Model 
@@ -73,7 +73,7 @@ This model Loss values over time is shown as below, which demonstrate rapid lear
 
 #### Deep Model 
 
-This is a aliitle bit deeper model compared to shallow one above. 
+This is a aliitle bit deeper model compared to shallow one above, it has two more layers. 
 
 ![alt text][image4]
 
