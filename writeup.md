@@ -47,6 +47,7 @@ Firstly, the upsampling part takes the input, and increases its width and height
 
 ## Proposed Architectures & Implementation
 
+As shown in the original FCN architecture by Shellhamer, Long, and Darrell (2014) below, FCN networks have many layers to performance segmentation on images. However, The proposed models here are tageted on semantic segmentation pf images taken from 3D environment
 
 ## tuning Hyperparameters
 
