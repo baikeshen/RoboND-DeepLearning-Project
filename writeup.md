@@ -1,4 +1,8 @@
 # Deep Learning Project Writeup
+[image1]: ./misc/SegNet_Badrinaray_2016.jpg
+[image2]: ./misc/SegNet_Long_2014.jpg
+[image3]: ./misc/BK_FCN_01.jpg
+[image4]: ./misc/BK_FCN_04.jpg
 
 ## Project Introduction
 
@@ -15,7 +19,7 @@ In this project, we are using a Fully Convolutional Neural Network to help us in
 - decoder layers
 
 Below is an example of FCN architecture which shows an FCN network called SegNet taken from paper by Badrinarayanan, Kendall, and Cipolla.
-![network-architecture-overview](misc/fcb.png)
+![alt text][image1]
 
 ##### FCN:encoding layer
 
@@ -47,7 +51,9 @@ Firstly, the upsampling part takes the input, and increases its width and height
 
 ## Proposed Architectures & Implementation
 
-As shown in the original FCN architecture by Shellhamer, Long, and Darrell (2014) below, FCN networks have many layers to performance segmentation on images. However, The proposed models here are targeted on semantic segmentation of images taken from 3D simulated environment. It is unnecceary to duplicate this kind of architecture in order to get some reasonable performance. So smaller models are proposed for investigations:
+As shown in the original FCN architecture by Shellhamer, Long, and Darrell (2014) below, FCN networks have many layers to performance segmentation on images. 
+![alt text][image2]
+However, The proposed models here are targeted on semantic segmentation of images taken from 3D simulated environment. It is unnecceary to duplicate this kind of architecture in order to get some reasonable performance. So smaller models are proposed for investigations:
 
 - Shallow Model 1 with 1X1 convolutions
 - Shallow Model 2 with 1X1 convolutions
@@ -59,7 +65,7 @@ These three models are discussed in more detail as follows.
 
 There are total of 5 layers consisted of this proposed model. The network architecture is shown in Figure X, and the detailed description of each layer is domonstrated in Table:
 
-
+![alt text][image3]
 
 Name         Width        Height       Depth            Layer Detail
 
@@ -76,6 +82,10 @@ Input         160          160          3                  Input Image
                                                                                             
    1             80           80          32          Convol2D( Filters=32, Kernel=(3X3), Stride=2, Padding='same')
     1             80           80          32          Convol2D( Filters=32, Kernel=(3X3), Stride=2, Padding='same')
+    
+
+![alt text][image4]
+
 ## tuning Hyperparameters
 
 Training the model requires specifying several hyperparameters.  This section of the writeup will attempt to discuss these parameters, indicate the values used, and clarify why such values were chosen
