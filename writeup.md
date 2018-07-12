@@ -60,6 +60,7 @@ These three models are discussed in more detail as follows.
 There are total of 5 layers consisted of this proposed model. The network architecture is shown in Figure X, and the detailed description of each layer is domonstrated in Table:
 
 
+
 Name         Width        Height       Depth            Layer Detail
 
 Input         160          160          3                  Input Image
