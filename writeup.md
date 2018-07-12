@@ -19,6 +19,7 @@ In this project, we are using a Fully Convolutional Neural Network to help us in
 - decoder layers
 
 Below is an example of FCN architecture which shows an FCN network called SegNet taken from paper by Badrinarayanan, Kendall, and Cipolla.
+
 ![alt text][image1]
 
 ##### FCN:encoding layer
@@ -30,11 +31,7 @@ In our case, a kernel size of three (3) has been applied. Sride for each encodin
 
 ##### FCN: 1X1 Convoluational layer
 
-Once done with the encoder blocks, output is then passed as input onto a convolutional 1x1 layer. A 1x1 convolution is essentially convolving with a set of filters of dimensions:
-
-1x1xfilter_size (HxWxD)
-stride = 1, and
-zero (same) padding.
+Once done with the encoder bloc Shallow Model 2 with 1X1 convolutionsks, output is then passed as input onto a convolutional 1x1 layer. A 1x1 convolution is essentially convolving with a set of filters of dimensions, including filter_size (HxWxD), stride and padding.
 
 in TensorFlow, the output shape of a convolutional layer is a 4D tensor. However, when we wish to feed the output of a convolutional layer into a fully connected layer, we flatten it into a 2D tensor. This results in the loss of spatial information, because no information about the location of the pixels is preserved. This could be avoided by using 1X1 Fully Convolution layer.
 
@@ -52,36 +49,24 @@ Firstly, the upsampling part takes the input, and increases its width and height
 ## Proposed Architectures & Implementation
 
 As shown in the original FCN architecture by Shellhamer, Long, and Darrell (2014) below, FCN networks have many layers to performance segmentation on images. 
+
 ![alt text][image2]
+
 However, The proposed models here are targeted on semantic segmentation of images taken from 3D simulated environment. It is unnecceary to duplicate this kind of architecture in order to get some reasonable performance. So smaller models are proposed for investigations:
 
 - Shallow Model 1 with 1X1 convolutions
-- Shallow Model 2 with 1X1 convolutions
 - Deep Model with 1X1 convolutions
 
-These three models are discussed in more detail as follows.
 
-#### Shallow Model 1 with 1X1 convolutions
+#### Shallow Model with 1X1 convolutions
 
-There are total of 5 layers consisted of this proposed model. The network architecture is shown in Figure X, and the detailed description of each layer is domonstrated in Table:
+There are total of 5 layers consisted of this proposed model. The network architecture is shown as below:
 
 ![alt text][image3]
 
-Name         Width        Height       Depth            Layer Detail
+This model 
 
-Input         160          160          3                  Input Image
-
- 1             80           80          32        encoder layer( Filters=32, Kernel=(3X3), Stride=2, Padding='same')     
- 
- 2             40           40          64        encoder layer( Filters=64, Kernel=(3X3), Stride=2, Padding='same')
- 
- 3             40           40         128     1 X 1 Convolution layer(Filters=128, Kernel=(1X1), Stride=1, Padding='same')
- 
- 4             80           80          32         decoder layer: Adding upsampled layer 3 to layer 1 with a skip connection,
-                                               and passed through a 2D convolution with 64 filters of 3X3 kernal, and same padding
-                                                                                            
-   1             80           80          32          Convol2D( Filters=32, Kernel=(3X3), Stride=2, Padding='same')
-    1             80           80          32          Convol2D( Filters=32, Kernel=(3X3), Stride=2, Padding='same')
+#### Deep Model with 1X convolution
     
 
 ![alt text][image4]
