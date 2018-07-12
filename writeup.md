@@ -10,11 +10,11 @@ This writeup was prepared for the benefit of the Udacity Robotics Nanodegree Dee
 
 ## Network Architecture
 In this project, we are using a Fully Convolutional Neural Network to help us in image segmentation and object identification. The network architecture is composed of following layers
-- 2 encoder layers
-- 1x1 conv layer
-- 2 decoder layers
+- encoder layers
+- conv layer
+- decoder layers
 
-Below is an illustration of the final network architecture.
+Below is an example of FCN architecture which shows an FCN network called SegNet taken from paper by Badrinarayanan, Kendall, and Cipolla.
 ![network-architecture-overview](misc/fcb.png)
 
 ##### FCN:encoding layer
@@ -28,14 +28,10 @@ In our case, a kernel size of three (3) has been applied. Sride for each encodin
 
 Once done with the encoder blocks, output is then passed as input onto a convolutional 1x1 layer. A 1x1 convolution is essentially convolving with a set of filters of dimensions:
 
-1x1xfilter_size (HxWxD)： 128
+1x1xfilter_size (HxWxD)
 stride = 1, and
 zero (same) padding.
 
-```
-    # TODO Add 1x1 Convolution layer using conv2d_batchnorm().
-    conv_1x1 = conv2d_batchnorm(input_layer=enc_bloc2, filters=128, kernel_size=1, strides=1)
-```
 in TensorFlow, the output shape of a convolutional layer is a 4D tensor. However, when we wish to feed the output of a convolutional layer into a fully connected layer, we flatten it into a 2D tensor. This results in the loss of spatial information, because no information about the location of the pixels is preserved. This could be avoided by using 1X1 Fully Convolution layer.
 
 ##### FCN:Decoder
@@ -47,6 +43,9 @@ Compared to prviously discussed encoder block as well as the 1X1 convolution lay
  - two succeeding separable convolutions
 
 Firstly, the upsampling part takes the input, and increases its width and height by a factor of two. This is done through what is called a *transposed convolution*; Secondly, The skip connection part concatenates the upsampled data with the corresponding encoder output with the same dimensions. This would allow us to retain information that the image has lost after going through multiple reductions of height and width; Last not least, two succeeding separable convolution layers with a stride of one and desired number of output or filters have been implemented  before returning the output.  
+
+
+## Proposed Architectures & Implementation
 
 
 ## tuning Hyperparameters
